@@ -15,7 +15,7 @@ from .serializers import (
     CustomTokenObtainPairSerializer,
     ChangePasswordSerializer,
 )
-from .models import Image, Image
+from .models import Image, ImageReaction
 from .permissions import IsAdminUserRole, IsAdminOrGuest, IsAdminOrSelf
 
 #  lwa kuchange password

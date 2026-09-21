@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-i&=z@dn)w!1=_^97nx^(=&qirgw!%v^c4ipi#--ac#@9#f4gfp
 DEBUG = True
 
 
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.deploy.tz', "http://localhost:8080","https://fuegobackend.deploy.tz"]
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.deploy.tz',"fuegobackend.deploy.tz","connect.fuego.co.tz"]
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.deploy.tz', "http://localhost:8080","https://https://friendly-barnacle-jj67v9wpjr6725g59-8000.app.github.dev"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.deploy.tz',"https://friendly-barnacle-jj67v9wpjr6725g59-8000.app.github.dev","connect.fuego.co.tz"]
 
 # Application definition
 
@@ -96,12 +96,12 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS =[
     "http://localhost:8080", # React dev server 
     "https://yourfrontend.com", # production domain
-    "https://fuegobackend.deploy.tz",
+    "https://friendly-barnacle-jj67v9wpjr6725g59-8000.app.github.dev",
     "https://connect.fuego.co.tz",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://fuegobackend.deploy.tz",
+    "https://friendly-barnacle-jj67v9wpjr6725g59-8000.app.github.dev",
     "https://connect.fuego.co.tz",
     "http://localhost:8080",
     "https://yourfrontend.com",

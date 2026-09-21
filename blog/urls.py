@@ -29,7 +29,8 @@ urlpatterns = [
      path("api/me/change-password/", ChangePasswordView.as_view(), name="change_password"),
 
     # JWT login & refresh
-    path("api/login/", CustomTokenObtainPairView.as_view(), name="custom_token_obtain_pair"),
+    path("api/token/", CustomTokenObtainPairView.as_view(), name="custom_token_obtain_pair"),
+    # path("api/login/", CustomTokenObtainPairView.as_view(), name="custom_token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
 
