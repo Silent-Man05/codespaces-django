@@ -76,6 +76,7 @@ class MeView(generics.RetrieveUpdateAPIView):
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(request_body=ChangePasswordSerializer)
     def post(self, request):
         serializer = ChangePasswordSerializer(
             data=request.data,

@@ -102,8 +102,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data["user_status"] = self.user.user_status
         return data
 
-
-
 class RegisterSerializer(serializers.ModelSerializer):
     username = serializers.CharField(
         required=True,
@@ -143,12 +141,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         ]
     )
 
-    image = serializers.CharField(
-        required=False,
-        allow_blank=True,
-        allow_null=True,
-    )
-
     class Meta:
         model = User
         fields = [
@@ -160,17 +152,14 @@ class RegisterSerializer(serializers.ModelSerializer):
             "role",
             "address",
             "phone_number",
-            "image",
         ]
         extra_kwargs = {
             "password": {"write_only": True},
         }
 
-    # Normalize email
     def validate_email(self, value):
         return value.lower()
 
-    # Prevent admin registration
     def validate_role(self, value):
         if value == "admin":
             raise serializers.ValidationError(
@@ -178,7 +167,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
         return value
 
-    # Extra password control
     def validate_password(self, value):
         if len(value) < 8:
             raise serializers.ValidationError(
@@ -186,37 +174,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
         return value
 
-    def validate(self, attrs):
-        if attrs.get("user_type") == "group_rep" and not attrs.get("officename"):
-            raise serializers.ValidationError({
-                "officename": "Office name is required for group representatives."
-            })
-        return attrs
-
-
-
     def create(self, validated_data):
         password = validated_data.pop("password")
-        image_b64 = validated_data.pop("image", None)
-
         user = User(**validated_data)
-        user.set_password(password)  # secure hashing
-
-        # ✅ Handle Base64 image with Pillow
-        if image_b64:
-            if "base64," in image_b64:
-                image_b64 = image_b64.split("base64,", 1)[1]
-
-            image_data = base64.b64decode(image_b64)
-            try:
-                image = Image.open(BytesIO(image_data))
-                ext = image.format.lower()  # e.g., 'png', 'jpeg'
-            except Exception:
-                ext = "png"  # fallback if format can't be detected
-
-            file_name = f"{uuid.uuid4()}.{ext}"
-            user.image.save(file_name, ContentFile(image_data), save=False)
-
+        user.set_password(password)
         user.save()
         return user
 
