@@ -19,13 +19,29 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.permissions import AllowAny
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 
 from hello_world.core import views as core_views
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="PhotoLab API",
+        default_version="v1",
+        description="PhotoLab authentication, image, and reaction API.",
+    ),
+    public=True,
+    permission_classes=[AllowAny],
+)
 
 urlpatterns = [
     path("", core_views.index),
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("api/", include("hello_world.core.urls")),
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="swagger"),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="redoc"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
